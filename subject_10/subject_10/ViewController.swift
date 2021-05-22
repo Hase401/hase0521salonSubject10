@@ -30,25 +30,22 @@ extension ViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let originalRed = UIColor(red: 255 / 255, green: 134 / 255, blue: 133 / 255, alpha: 1)
+        let originalGreen = UIColor(red: 155 / 255, green: 255 / 255, blue: 153 / 255, alpha: 1)
+        let originalBlue = UIColor(red: 174 / 255, green: 199 / 255, blue: 255 / 255, alpha: 1)
         
-        if indexPath.row % 3 == 1 {
-            let secondCell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-            secondCell.backgroundColor = UIColor.green
-            secondCell.configure(prefectures[indexPath.row], String(indexPath.row))
-            return secondCell
-        }
-
-        if indexPath.row % 3 == 2 {
-            let thirdCell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-            thirdCell.backgroundColor = .blue
-            thirdCell.configure(prefectures[indexPath.row], String(indexPath.row))
-            return thirdCell
-        }
+        let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
+        cell.configure(prefectures[indexPath.row], String(indexPath.row))
         
-        let firstCell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        firstCell.backgroundColor = .red
-        firstCell.configure(prefectures[indexPath.row], String(indexPath.row))
-        return firstCell
+        switch indexPath.row % 3 {
+        case 0:
+            cell.backgroundColor = originalRed
+        case 1:
+            cell.backgroundColor = originalGreen
+        default:
+            cell.backgroundColor = originalBlue
+        }
+        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
