@@ -13,45 +13,59 @@ class CustomTableViewCell: UITableViewCell {
     //UI部品を作る
     private let leftLabel: UILabel = {
         let label = UILabel()
-        return label
-    }()
-    private let rightLabel: UILabel = {
-        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.setContentHuggingPriority(UILayoutPriority(251), for: .horizontal)
+        label.textAlignment = .left
         return label
     }()
     
-    public func configure(_ prefectureName: String, _ indexNumber: String) {
+    private let rightLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .right
+        label.textColor = .gray
+        return label
+    }()
+
+    private static let backgroundColors: [UIColor] = [
+        UIColor(red: 255 / 255, green: 134 / 255, blue: 133 / 255, alpha: 1),
+        UIColor(red: 155 / 255, green: 255 / 255, blue: 153 / 255, alpha: 1),
+        UIColor(red: 174 / 255, green: 199 / 255, blue: 255 / 255, alpha: 1),
+    ]
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+
+        fatalError("not implemented")
+    }
+
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
         //UITableViewCellのcontentView: UIViewにメソッドaddSubViewを使って作ったUI部品を表示させる
         self.contentView.addSubview(leftLabel)
         self.contentView.addSubview(rightLabel)
-        
-        leftLabel.text = prefectureName
-        rightLabel.text = indexNumber + "番目の都道府県です"
-        leftLabel.textAlignment = .left
-        rightLabel.textAlignment = .right
-        //追加
-        rightLabel.textColor = UIColor.gray
+
+        NSLayoutConstraint.activate([
+            // horizontal
+            leftLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
+            leftLabel.trailingAnchor.constraint(equalTo: rightLabel.leadingAnchor),
+            rightLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor),
+
+            // vertical
+            leftLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
+            leftLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
+            rightLabel.topAnchor.constraint(equalTo: leftLabel.topAnchor),
+            rightLabel.bottomAnchor.constraint(equalTo: leftLabel.bottomAnchor),
+        ])
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        leftLabel.frame = CGRect(x: 20,
-                                 y: 5,
-                                 width: 100,
-                                 height: 30)
-        rightLabel.frame = CGRect(x: 100, //leftLabelのwidthと同じ
-                                  y: 5,
-                                  width: contentView.frame.size.width-100-20, //leftLabelのwidth + leftLabelのx値のみ(右側からの余白)
-                                  height: 30)
+    public func configure(prefectureName: String, row: Int) {
 
-        //別の書き方
-//        leftLabel.frame = CGRect(x: 20,
-//                                 y: 5,
-//                                 width: 100,
-//                                 height: 30)
-//        rightLabel.frame = CGRect(x: 120, //leftLabelのwidth + x　にする
-//                                  y: 5,
-//                                  width: contentView.frame.size.width-120-20,
-//                                  height: 30)
+        leftLabel.text = prefectureName
+        rightLabel.text = "\(row)番目の都道府県です"
+
+        self.backgroundColor
+            = Self.backgroundColors[row % Self.backgroundColors.count]
     }
 }
