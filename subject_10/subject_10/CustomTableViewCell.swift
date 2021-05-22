@@ -29,17 +29,29 @@ class CustomTableViewCell: UITableViewCell {
         rightLabel.text = indexNumber + "番目の都道府県です"
         leftLabel.textAlignment = .left
         rightLabel.textAlignment = .right
+        //追加
+        rightLabel.textColor = UIColor.gray
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        leftLabel.frame = CGRect(x: 5,
+        leftLabel.frame = CGRect(x: 20,
                                  y: 5,
                                  width: 100,
                                  height: 30)
-        rightLabel.frame = CGRect(x: 105,
+        rightLabel.frame = CGRect(x: 100, //leftLabelのwidthと同じ
                                   y: 5,
-                                  width: contentView.frame.size.width-110,
+                                  width: contentView.frame.size.width-100-20, //leftLabelのwidth + leftLabelのx値のみ(右側からの余白)
                                   height: 30)
+
+        //別の書き方
+//        leftLabel.frame = CGRect(x: 20,
+//                                 y: 5,
+//                                 width: 100,
+//                                 height: 30)
+//        rightLabel.frame = CGRect(x: 120, //leftLabelのwidth + x　にする
+//                                  y: 5,
+//                                  width: contentView.frame.size.width-120-20,
+//                                  height: 30)
     }
 }
