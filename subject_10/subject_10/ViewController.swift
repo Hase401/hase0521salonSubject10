@@ -26,30 +26,18 @@ extension ViewController: UITableViewDelegate {
 
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 47
+        prefectures.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let originalRed = UIColor(red: 255 / 255, green: 134 / 255, blue: 133 / 255, alpha: 1)
-        let originalGreen = UIColor(red: 155 / 255, green: 255 / 255, blue: 153 / 255, alpha: 1)
-        let originalBlue = UIColor(red: 174 / 255, green: 199 / 255, blue: 255 / 255, alpha: 1)
-        
+
         let cell = tableView.dequeueReusableCell(withIdentifier: CustomTableViewCell.identifier, for: indexPath) as! CustomTableViewCell
-        cell.configure(prefectures[indexPath.row], String(indexPath.row))
+
+        cell.configure(
+            prefectureName: prefectures[indexPath.row],
+            row: indexPath.row
+        )
         
-        switch indexPath.row % 3 {
-        case 0:
-            cell.backgroundColor = originalRed
-        case 1:
-            cell.backgroundColor = originalGreen
-        default:
-            cell.backgroundColor = originalBlue
-        }
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 40
-    }
 }
-
